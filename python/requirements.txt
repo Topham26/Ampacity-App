@@ -1,0 +1,17 @@
+# Wire Sizing Calculator - Python Requirements
+#
+# This application uses only Python standard library modules:
+# - tkinter (GUI)
+# - typing (type hints)
+# - pathlib (file paths)
+#
+# No external dependencies are required.
+#
+# Python Version Required: 3.6+
+#
+# Note: tkinter comes pre-installed with most Python distributions.
+# If tkinter is not available on your system:
+#   - Ubuntu/Debian: sudo apt-get install python3-tk
+#   - Fedora: sudo dnf install python3-tkinter
+#   - macOS: tkinter is included with Python from python.org
+#   - Windows: tkinter is included with Python installer
