@@ -1,14 +1,31 @@
 # CLAUDE.md - Ampacity Calculator App
 
+> **Note**: This repository contains TWO versions of the app:
+> - **Modern (2025)**: `AmpacityCalculator.Modern/` - Windows App SDK (WinUI 3) for Windows 10/11
+> - **Legacy**: `Ampacity_Calculator/` - Original Windows 8.1 UWP application
+>
+> **For new development, use the Modern version.** See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for details.
+
 ## Project Overview
 
-**Ampacity Calculator** is a Windows 8.1 Universal Windows Platform (UWP) application that calculates proper wire sizing for electrical installations based on voltage drop requirements, ampacity ratings, and power loss calculations.
+**Ampacity Calculator** is a professional electrical wire sizing calculator that determines proper wire gauge for electrical installations based on voltage drop requirements, ampacity ratings, and power loss calculations.
 
-- **Version**: 1.0
+### Modern Version (v2.0 - 2025)
+- **Platform**: Windows 10 version 1809+ / Windows 11
+- **Framework**: .NET 8.0 + Windows App SDK 1.6
+- **UI**: WinUI 3 (Fluent Design)
+- **Package**: MSIX (Store-ready)
+- **Location**: `AmpacityCalculator.Modern/`
+
+### Legacy Version (v1.0 - Original)
 - **Platform**: Windows 8.1+ (Minimum OS: 6.2.1)
 - **Framework**: .NET Framework for Windows Store Apps
-- **Language**: C# with XAML UI
-- **Author**: Scott Hummel
+- **UI**: Windows 8.1 XAML
+- **Package**: AppX
+- **Location**: `Ampacity_Calculator/`
+
+**Author**: Scott Hummel
+**Language**: C# with XAML UI
 
 ## Purpose
 
@@ -25,10 +42,33 @@ This application helps electricians and engineers determine the appropriate wire
 Ampacity-App/
 ├── README.txt                              # Project description
 ├── CLAUDE.md                               # This file - AI assistant guide
-└── Ampacity_Calculator/
+├── MIGRATION_GUIDE.md                      # Windows 8.1 → App SDK migration guide
+│
+├── AmpacityCalculator.Modern/              # ⭐ MODERN VERSION (Use this!)
+│   ├── AmpacityCalculator.csproj          # SDK-style project file
+│   ├── Package.appxmanifest               # Modern MSIX manifest
+│   ├── app.manifest                       # Windows compatibility manifest
+│   ├── README.md                          # Modern version documentation
+│   │
+│   ├── App.xaml                           # Application resources (WinUI 3)
+│   ├── App.xaml.cs                        # Application lifecycle
+│   ├── MainWindow.xaml                    # Main UI (WinUI 3 + Fluent Design)
+│   ├── MainWindow.xaml.cs                 # Calculation logic
+│   │
+│   ├── Assets/                            # Application images
+│   │   ├── Square150x150Logo.png
+│   │   ├── Square44x44Logo.png
+│   │   ├── Wide310x150Logo.png
+│   │   ├── SplashScreen.png
+│   │   └── StoreLogo.png
+│   │
+│   └── Properties/
+│       └── launchSettings.json            # Debug profiles
+│
+└── Ampacity_Calculator/                   # Legacy Windows 8.1 version
     ├── Ampacity_Calculator.sln            # Visual Studio solution file
     └── Ampacity_Calculator/
-        ├── Ampacity_Calculator.csproj     # Project file
+        ├── Ampacity_Calculator.csproj     # Old verbose project file
         ├── Package.appxmanifest           # UWP app manifest
         ├── Ampacity_Calculator_TemporaryKey.pfx  # Development certificate
         │
@@ -43,7 +83,7 @@ Ampacity-App/
         │   ├── SplashScreen.png
         │   └── StoreLogo.png
         │
-        ├── Common/                        # Shared helper classes
+        ├── Common/                        # Shared helper classes (deprecated in modern)
         │   ├── BindableBase.cs            # MVVM base class
         │   ├── BooleanNegationConverter.cs # XAML converter
         │   ├── BooleanToVisibilityConverter.cs # XAML converter
@@ -62,30 +102,92 @@ Ampacity-App/
 
 ## Technology Stack
 
-### Core Technologies
+### Modern Version (AmpacityCalculator.Modern/)
+
+**Core Technologies**:
+- **C# 12**: Latest language features with nullable reference types
+- **XAML**: UI markup language (WinUI 3 dialect)
+- **.NET 8.0**: Latest LTS .NET version
+- **Windows App SDK 1.6**: Modern Windows platform APIs
+- **MSBuild**: Build system (.NET CLI / Visual Studio 2022)
+
+**Frameworks & APIs**:
+- `Microsoft.UI.Xaml` - WinUI 3 UI framework
+- `Microsoft.Windows.SDK.BuildTools` - Windows 10/11 APIs
+- `Microsoft.UI.Windowing` - Modern window management
+- Built-in dependency injection support
+- MSIX packaging system
+
+**Build Configurations**:
+- **Debug**: Full symbols, no optimization
+- **Release**: Optimized, trimmed for deployment
+- **Platforms**: x86, x64, ARM64
+- **Self-Contained**: Optional single-file deployment
+
+**Requirements**:
+- Windows 10 version 1809 (10.0.17763.0) minimum
+- Windows 11 recommended
+- Visual Studio 2022 (17.8+) for development
+- .NET 8.0 SDK
+
+### Legacy Version (Ampacity_Calculator/)
+
+**Core Technologies**:
 - **C#**: Primary programming language
 - **XAML**: UI markup language
 - **Windows Runtime**: Windows Store App APIs
 - **MSBuild**: Build system (Visual Studio 2012+)
 
-### Frameworks & APIs Used
+**Frameworks & APIs**:
 - `Windows.UI.Xaml` - UI framework
 - `Windows.ApplicationModel` - App lifecycle
 - `Windows.Foundation` - Core Windows Runtime types
 
-### Build Configurations
+**Build Configurations**:
 - **Debug**: Full symbols, no optimization
 - **Release**: Optimized, PDB-only symbols
 - **Platforms**: AnyCPU, ARM, x64, x86
 
+**Requirements**:
+- Windows 8.1 minimum
+- Visual Studio 2012+ for development
+
 ## Application Architecture
 
-### Entry Point
-- **App.xaml.cs**: Application singleton that handles:
+### Modern Version Architecture
+
+**Entry Point** (App.xaml.cs):
+- Simplified application singleton
+- `OnLaunched()` creates and activates MainWindow
+- No frame-based navigation (single window app)
+- Modern lifecycle management
+
+**Main Window** (MainWindow.xaml.cs):
+- Inherits from `Window` (not `Page`)
+- Contains all calculation logic in `CalculateButton_Click()`
+- Uses `NumberBox` controls with built-in validation
+- `InfoBar` for modern error messaging
+- Responsive design with `ScrollViewer`
+
+**UI Pattern**:
+```
+App → MainWindow (all functionality in one window)
+```
+
+**Key Features**:
+- No `Common/` helper classes needed (WinUI 3 provides equivalents)
+- Modern Fluent Design controls (NumberBox, InfoBar, Cards)
+- Theme-aware resources
+- Simplified state management
+
+### Legacy Version Architecture
+
+**Entry Point** (App.xaml.cs):
+- Application singleton that handles:
   - Application initialization
   - Launch activation
   - Suspend/resume lifecycle
-  - Navigation to MainPage
+  - Frame-based navigation to MainPage
 
 ### Main Page (MainPage.xaml.cs:22-196)
 The core calculation logic resides in the `Button_Click` event handler:
@@ -129,7 +231,57 @@ The core calculation logic resides in the `Button_Click` event handler:
 
 ## Development Workflows
 
-### Building the Application
+### Modern Version - Building & Running
+
+**Requirements**:
+- Visual Studio 2022 (17.8 or later) OR VS Code with C# extension
+- .NET 8.0 SDK
+- Windows 10 SDK (10.0.19041.0 or later)
+- Windows App SDK 1.6
+
+**Build Commands**:
+```bash
+# Navigate to modern project
+cd AmpacityCalculator.Modern
+
+# Restore NuGet packages
+dotnet restore
+
+# Build for debug
+dotnet build
+
+# Build for release
+dotnet build -c Release
+
+# Build for specific platform
+dotnet build -c Release -r win-x64
+
+# Run the application
+dotnet run
+
+# Publish as MSIX package
+dotnet publish -c Release -r win-x64 --self-contained
+```
+
+**Visual Studio 2022**:
+1. Open `AmpacityCalculator.csproj`
+2. Select target platform (x64, x86, or ARM64)
+3. Press F5 to build and run
+4. Use "Publish" to create MSIX package
+
+**Build Output**:
+- Debug: `bin/Debug/net8.0-windows10.0.19041.0/`
+- Release: `bin/Release/net8.0-windows10.0.19041.0/`
+- Published: `bin/Release/net8.0-windows10.0.19041.0/win-x64/publish/`
+
+**Testing**:
+- All NumberBox inputs validate automatically
+- InfoBar displays errors professionally
+- Test light/dark themes (Windows Settings → Personalization → Colors)
+- Test on Windows 10 1809+ and Windows 11
+- Verify responsive layout at different window sizes
+
+### Legacy Version - Building & Running
 
 **Requirements**:
 - Visual Studio 2012 or later
@@ -227,7 +379,53 @@ git push -u origin claude/claude-md-mhzo2qt6zb0ubr2e-01DXUc9WR1ZfR4TfpE8Eh2id
 
 ## Key Conventions for AI Assistants
 
-### Code Style
+> **IMPORTANT**: When making changes, use the **Modern Version** (`AmpacityCalculator.Modern/`) unless specifically working on legacy compatibility.
+
+### Modern Version Conventions (AmpacityCalculator.Modern/)
+
+**C# Conventions**:
+- **Naming**:
+  - PascalCase for classes, methods, properties
+  - camelCase for local variables and parameters
+  - snake_case for UI element names (for consistency with legacy)
+  - Prefix private fields with underscore: `_resultsVisibility`
+- **Indentation**: 4 spaces (no tabs)
+- **Braces**: K&R style (opening brace on same line)
+- **Comments**: XML doc comments (`///`) for all public methods
+- **Nullable**: Enable nullable reference types (`<Nullable>enable</Nullable>`)
+- **Modern C#**: Use latest C# 12 features (file-scoped namespaces, init-only properties, etc.)
+
+**XAML Conventions (WinUI 3)**:
+- Use `x:Name` for elements accessed in code-behind
+- Leverage modern controls: `NumberBox`, `InfoBar`, `StackPanel` with `Spacing`
+- Use theme resources: `{ThemeResource CardBackgroundFillColorDefaultBrush}`
+- Prefer `StackPanel` with `Spacing` property over manual margins
+- Use semantic control styles: `{StaticResource AccentButtonStyle}`
+
+**Input Validation Pattern (Modern)**:
+```csharp
+// Use NumberBox built-in validation
+if (double.IsNaN(wire_length.Value) || wire_length.Value <= 0)
+{
+    errorMessage = "Please enter a valid wire length greater than 0.";
+    return false;
+}
+```
+
+**Error Display (Modern)**:
+```csharp
+// Use InfoBar instead of TextBlock
+error_message.Message = "Your error message here";
+error_message.IsOpen = true;
+```
+
+**Key Files to Modify**:
+- `MainWindow.xaml` - UI layout
+- `MainWindow.xaml.cs` - Logic and calculations
+- `Package.appxmanifest` - App metadata
+- `Assets/` - Icons and images
+
+### Legacy Version Conventions (Ampacity_Calculator/)
 
 **C# Conventions**:
 - **Naming**:
@@ -438,14 +636,29 @@ Potential improvements for AI assistants to implement:
 
 ## Version History
 
-- **v1.0** (Current): Initial release with core calculator functionality
+- **v2.0** (2025 - Current - Modern): Windows App SDK rewrite
+  - Complete modernization to WinUI 3 and .NET 8.0
+  - Fluent Design UI with modern controls (NumberBox, InfoBar)
+  - Responsive card-based layout
+  - Theme-aware (light/dark mode support)
+  - MSIX packaging for Windows Store
+  - Improved input validation
+  - Better error handling
+  - Enhanced accessibility
+  - Windows 10 1809+ / Windows 11 support
+  - Location: `AmpacityCalculator.Modern/`
+
+- **v1.0** (Original - Legacy): Windows 8.1 UWP application
   - Wire sizing based on ampacity and voltage drop
   - Cu/Al material support
   - Input validation
   - Power loss calculation
+  - Windows 8.1+ support
+  - Location: `Ampacity_Calculator/`
 
 ---
 
 **Last Updated**: 2025-11-15
 **Maintained By**: AI assistants working with this codebase
 **Contact**: Scott Hummel (original author)
+**Migration**: See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for details on the v1.0 → v2.0 migration

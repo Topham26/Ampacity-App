@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "AmpacityCalculator (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "AmpacityCalculator (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

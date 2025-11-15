@@ -1,0 +1,195 @@
+<Window
+    x:Class="AmpacityCalculator.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Ampacity Calculator">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Bar -->
+        <Grid Grid.Row="0" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+              Padding="16,12">
+            <TextBlock Text="Voltage Drop &amp; Wire Size Calculator"
+                       Style="{StaticResource TitleTextBlockStyle}"/>
+        </Grid>
+
+        <!-- Main Content -->
+        <ScrollViewer Grid.Row="1" Padding="24">
+            <Grid MaxWidth="1000">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" MaxWidth="500"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="*" MaxWidth="500"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Input Section -->
+                <StackPanel Grid.Column="0" Spacing="16">
+                    <TextBlock Text="Input Parameters"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Margin="0,0,0,8"/>
+
+                    <!-- Wire Length -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Length of Wire (ft)"/>
+                        <NumberBox x:Name="wire_length"
+                                   SpinButtonPlacementMode="Compact"
+                                   Minimum="0"
+                                   SmallChange="10"
+                                   LargeChange="100"
+                                   PlaceholderText="Enter length"/>
+                    </StackPanel>
+
+                    <!-- Current -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Current (A)"/>
+                        <NumberBox x:Name="current"
+                                   SpinButtonPlacementMode="Compact"
+                                   Minimum="0"
+                                   SmallChange="5"
+                                   LargeChange="50"
+                                   PlaceholderText="Enter current"/>
+                    </StackPanel>
+
+                    <!-- Voltage -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="System Voltage (V)"/>
+                        <NumberBox x:Name="voltage"
+                                   SpinButtonPlacementMode="Compact"
+                                   Minimum="0"
+                                   SmallChange="10"
+                                   LargeChange="100"
+                                   PlaceholderText="Enter voltage"/>
+                    </StackPanel>
+
+                    <!-- Max Voltage Drop -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Maximum Voltage Drop (%)"/>
+                        <NumberBox x:Name="volt_drop_percent"
+                                   SpinButtonPlacementMode="Compact"
+                                   Minimum="0"
+                                   Maximum="100"
+                                   SmallChange="0.5"
+                                   LargeChange="1"
+                                   PlaceholderText="Enter max % drop"/>
+                    </StackPanel>
+
+                    <!-- Material Selection -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Conductor Material"/>
+                        <ComboBox x:Name="material"
+                                  SelectedIndex="0"
+                                  HorizontalAlignment="Stretch">
+                            <ComboBoxItem Content="Copper (Cu)"/>
+                            <ComboBoxItem Content="Aluminum (Al)"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Phase Selection -->
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="Electrical System"/>
+                        <ComboBox x:Name="phases"
+                                  SelectedIndex="0"
+                                  HorizontalAlignment="Stretch">
+                            <ComboBoxItem Content="Single Phase"/>
+                            <ComboBoxItem Content="Three Phase"/>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- Calculate Button -->
+                    <Button Content="Calculate Wire Size"
+                            Click="CalculateButton_Click"
+                            Style="{StaticResource AccentButtonStyle}"
+                            HorizontalAlignment="Stretch"
+                            Margin="0,16,0,0"/>
+
+                    <!-- Error Message -->
+                    <InfoBar x:Name="error_message"
+                             IsOpen="False"
+                             Severity="Error"
+                             IsClosable="False"/>
+                </StackPanel>
+
+                <!-- Results Section -->
+                <StackPanel Grid.Column="2" Spacing="16">
+                    <TextBlock Text="Calculation Results"
+                               Style="{StaticResource SubtitleTextBlockStyle}"
+                               Margin="0,0,0,8"/>
+
+                    <!-- Results Cards -->
+                    <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="16"
+                            Visibility="{x:Bind ResultsVisibility, Mode=OneWay}">
+                        <StackPanel Spacing="16">
+                            <!-- Wire Size -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Recommended Wire Size"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <TextBlock x:Name="chosenSize"
+                                           Style="{StaticResource TitleTextBlockStyle}"
+                                           Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"/>
+                            </StackPanel>
+
+                            <Border Height="1"
+                                    Background="{ThemeResource DividerStrokeColorDefaultBrush}"/>
+
+                            <!-- Voltage Drop -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Actual Voltage Drop"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <TextBlock x:Name="ResultsVD"
+                                           Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            </StackPanel>
+
+                            <!-- Voltage Drop Percentage -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Voltage Drop Percentage"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <TextBlock x:Name="ResultsVDper"
+                                           Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            </StackPanel>
+
+                            <!-- Power Loss -->
+                            <StackPanel Spacing="4">
+                                <TextBlock Text="Power Loss"
+                                           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                           Style="{StaticResource CaptionTextBlockStyle}"/>
+                                <TextBlock x:Name="powerloss"
+                                           Style="{StaticResource SubtitleTextBlockStyle}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Info Card -->
+                    <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="8"
+                            Padding="16">
+                        <StackPanel Spacing="8">
+                            <TextBlock Text="ℹ️ About This Calculator"
+                                       Style="{StaticResource BodyStrongTextBlockStyle}"/>
+                            <TextBlock TextWrapping="Wrap"
+                                       Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                                <Run Text="This calculator determines the minimum wire size needed to meet your voltage drop requirements while ensuring adequate ampacity. "/>
+                                <Run Text="Calculations are based on NEC ampacity tables for 72°C rated conductors at 30°C ambient temperature."/>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Window>
