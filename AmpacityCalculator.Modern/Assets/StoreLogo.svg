@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgStore" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3730a3;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="copperStore" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="50" height="50" fill="url(#bgStore)" rx="4"/>
+
+  <!-- Wire cross-section -->
+  <circle cx="25" cy="25" r="16" fill="#991b1b" opacity="0.3"/>
+  <circle cx="25" cy="25" r="15" fill="#dc2626"/>
+  <circle cx="25" cy="25" r="12" fill="url(#copperStore)"/>
+
+  <!-- Wire strands pattern -->
+  <circle cx="20" cy="20" r="3" fill="#fbbf24" opacity="0.6"/>
+  <circle cx="30" cy="20" r="3" fill="#fbbf24" opacity="0.6"/>
+  <circle cx="20" cy="30" r="3" fill="#fbbf24" opacity="0.6"/>
+  <circle cx="30" cy="30" r="3" fill="#fbbf24" opacity="0.6"/>
+  <circle cx="25" cy="25" r="3" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="25" cy="17" r="2" fill="#fbbf24" opacity="0.5"/>
+  <circle cx="25" cy="33" r="2" fill="#fbbf24" opacity="0.5"/>
+  <circle cx="17" cy="25" r="2" fill="#fbbf24" opacity="0.5"/>
+  <circle cx="33" cy="25" r="2" fill="#fbbf24" opacity="0.5"/>
+
+  <!-- Voltage accent -->
+  <path d="M 27 10 L 20 25 L 25 25 L 23 40 L 30 25 L 25 25 Z" fill="#fbbf24" opacity="0.3" stroke="#f59e0b" stroke-width="0.8"/>
+</svg>

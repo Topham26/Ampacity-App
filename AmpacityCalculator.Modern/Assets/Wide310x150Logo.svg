@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="310" height="150" viewBox="0 0 310 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgWide" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a8a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3730a3;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="copperWire" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#d97706;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b45309;stop-opacity:1" />
+    </linearGradient>
+
+    <linearGradient id="insulationRed" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:0.9" />
+    </linearGradient>
+
+    <linearGradient id="insulationBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2563eb;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#1e40af;stop-opacity:0.9" />
+    </linearGradient>
+
+    <linearGradient id="insulationBlack" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#374151;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#1f2937;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="310" height="150" fill="url(#bgWide)" rx="8"/>
+
+  <!-- Three parallel wires representing electrical system -->
+
+  <!-- Wire 1 (Red - Hot) -->
+  <rect x="20" y="40" width="200" height="18" rx="9" fill="#7f1d1d" opacity="0.3"/>
+  <rect x="20" y="40" width="200" height="16" rx="8" fill="url(#insulationRed)"/>
+  <rect x="24" y="42" width="192" height="12" rx="6" fill="url(#copperWire)"/>
+
+  <!-- Wire 2 (Blue - Neutral) -->
+  <rect x="20" y="66" width="200" height="18" rx="9" fill="#1e3a8a" opacity="0.3"/>
+  <rect x="20" y="66" width="200" height="16" rx="8" fill="url(#insulationBlue)"/>
+  <rect x="24" y="68" width="192" height="12" rx="6" fill="url(#copperWire)"/>
+
+  <!-- Wire 3 (Black/Green - Ground) -->
+  <rect x="20" y="92" width="200" height="18" rx="9" fill="#111827" opacity="0.3"/>
+  <rect x="20" y="92" width="200" height="16" rx="8" fill="url(#insulationBlack)"/>
+  <rect x="24" y="94" width="192" height="12" rx="6" fill="url(#copperWire)"/>
+
+  <!-- Voltage indicator -->
+  <path d="M 235 60 L 220 75 L 230 75 L 215 90 L 230 75 L 225 75 Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="2"/>
+
+  <!-- Text -->
+  <text x="255" y="65" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#fbbf24">Ampacity</text>
+  <text x="255" y="88" font-family="Arial, sans-serif" font-size="16" fill="#cbd5e1">Calculator</text>
+
+  <!-- Wire gauge indicator -->
+  <text x="80" y="130" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">14 AWG - 750 kcmil</text>
+</svg>

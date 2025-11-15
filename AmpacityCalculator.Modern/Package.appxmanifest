@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap rescap">
 
   <Identity
-    Name="AmpacityCalculator"
+    Name="ScottHummel.AmpacityCalculator"
     Publisher="CN=Scott Hummel"
     Version="2.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="593a2a2e-fcb5-4824-b856-b80b19c284bb" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="A7F3E821-B4C9-4D5F-9A12-8E6B3F2C1D9A" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Ampacity Calculator</DisplayName>
